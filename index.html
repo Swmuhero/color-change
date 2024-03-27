@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Box Changer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: url(th.jpeg) center/cover no-repeat; /
+}
+
+
+.heading{
+  height: 40px;
+  width: 211px;
+  background-color: white;
+  font-size: 32px;
+  margin-bottom: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 0 10px 5px rgb(255, 251, 0);
+}
+
+#colorBox {
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border: 2px solid #333;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#colorInput {
+  margin-bottom: 10px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+@keyframes colorChange {
+  0% { background-color: white; }
+  50% { background-color: #FFD700; }
+  100% { background-color: inherit; }
+}
+
+.colorChangeAnimation {
+  animation: colorChange 1s ease;
+}
+
+</style>
+<body>
+
+    <div class="container">
+        <h1 class="heading">Color Change</h1>
+        <div id="colorBox"></div>
+        <input type="text" id="colorInput" placeholder="Enter color name">
+        <button onclick="changeColor()">Change Color</button>
+      </div>
+      
+<script>
+// Function to change color
+function changeColor() {
+  var colorName = document.getElementById("colorInput").value.trim();
+  var colorBox = document.getElementById("colorBox");
+
+  if (isValidColor(colorName)) {
+    colorBox.style.backgroundColor = colorName;
+    colorBox.classList.add("colorChangeAnimation");
+    setTimeout(function() {
+      colorBox.classList.remove("colorChangeAnimation");
+    }, 1000); // 1 second animation
+    document.getElementById("colorInput").value = ''; // Clear input after changing color
+  } else {
+    alert("Invalid color name. Please enter a valid color name.");
+  }
+}
+
+// Function to check if color is valid
+function isValidColor(color) {
+  var s = new Option().style;
+  s.color = color;
+  return s.color == color;
+}
+
+// Function to revert color box to initial state
+function revertColor() {
+  var colorBox = document.getElementById("colorBox");
+  colorBox.style.backgroundColor = "white";
+}
+
+// Hover effect on color box
+document.getElementById("colorBox").addEventListener("mouseenter", function() {
+  this.style.transform = "scale(1.1)";
+});
+
+document.getElementById("colorBox").addEventListener("mouseleave", function() {
+  this.style.transform = "scale(1)";
+});
+
+// Click effect on color box
+document.getElementById("colorBox").addEventListener("click", function() {
+  revertColor();
+});
+
+// Click effect on change color button
+document.getElementById("colorButton").addEventListener("click", function() {
+  changeColor();
+});
+
+// Allow pressing Enter to change color
+document.getElementById("colorInput").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    changeColor();
+  }
+});
+
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
